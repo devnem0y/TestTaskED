@@ -20,12 +20,10 @@ public class Element : MonoBehaviour
     private void OnMouseDown()
     {
         List<Vector2> vectors = new List<Vector2>();
-
         FindingBorder(vectors);
 
         foreach (Vector2 v in vectors)
         {
-
             if (field.GetCell(v).Free)
             {
                 field.GetCell(transform.position).Free = true;
@@ -49,25 +47,9 @@ public class Element : MonoBehaviour
         float x = transform.position.x;
         float y = transform.position.y;
 
-        if (transform.position.y + 1 <= field.MaxY)
-        {
-            float newY = transform.position.y + 1;
-            v2.Add(new Vector2(x, newY));
-        }
-        if (transform.position.x + 1 <= field.MinX * -1)
-        {
-            float newX = transform.position.x + 1;
-            v2.Add(new Vector2(newX, y));
-        }
-        if (transform.position.y - 1 >= field.MaxY * -1)
-        {
-            float newY = transform.position.y - 1;
-            v2.Add(new Vector2(x, newY));
-        }
-        if (transform.position.x - 1 >= field.MinX)
-        {
-            float newX = transform.position.x - 1;
-            v2.Add(new Vector2(newX, y));
-        }
+        if (y + 1 <= field.MaxY) v2.Add(new Vector2(x, y + 1));
+        if (x + 1 <= field.MinX * -1) v2.Add(new Vector2(x + 1, y));
+        if (y - 1 >= field.MaxY * -1) v2.Add(new Vector2(x, y - 1));
+        if (x - 1 >= field.MinX) v2.Add(new Vector2(x - 1, y));
     }
 }

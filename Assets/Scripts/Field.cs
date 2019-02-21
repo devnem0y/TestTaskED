@@ -35,7 +35,6 @@ public class Field : MonoBehaviour
     private void Create()
     {
         grid = new int[width, height];
-
         MinX = ((width - 1) / 2f) * -1;
         MaxY = ((height - 1) / 2f);
 
@@ -47,7 +46,6 @@ public class Field : MonoBehaviour
             {
                 Cell cell = new Cell(id, new Vector2(MinX + x, MaxY - y), transform);
                 cells.Add(cell);
-                //Instantiate(Resources.Load("Cell"), cell.Position, Quaternion.identity, transform);
                 id++;
             }
         }
