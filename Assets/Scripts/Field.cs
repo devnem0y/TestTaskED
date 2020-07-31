@@ -14,12 +14,16 @@ public class Field : MonoBehaviour
     private List<GameObject> Elements = new List<GameObject>();
 
     [Space, SerializeField]
-    private Text frame;
-
-    private int[,] grid;
+    private Text frame = null;
+    
+    [SerializeField]
+    private Button reversBtn = null;
+    
     public float MinX { get; set; }
     public float MaxY { get; set; }
     private List<Cell> cells = new List<Cell>();
+
+    private List<int> el = new List<int>();
 
     private void Awake()
     {
@@ -30,11 +34,12 @@ public class Field : MonoBehaviour
     {
         Create();
         Generation();
+        CellCheck();
+        Change();
     }
 
     private void Create()
     {
-        grid = new int[width, height];
         MinX = ((width - 1) / 2f) * -1;
         MaxY = ((height - 1) / 2f);
 
@@ -49,8 +54,6 @@ public class Field : MonoBehaviour
                 id++;
             }
         }
-
-        Change();
     }
 
     private void Generation()
@@ -63,7 +66,9 @@ public class Field : MonoBehaviour
                 {
                     c.Free = false;
                     int rnd = Random.Range(0, Elements.Count - 1);
-                    Instantiate(Elements[rnd], c.Position, Quaternion.identity, transform);
+                    GameObject el = Elements[rnd];
+                    Instantiate(el, c.Position, Quaternion.identity, transform);
+                    c.Element = el.GetComponent<Element>();
                     Elements.RemoveAt(rnd);
                 }
             }
@@ -75,6 +80,15 @@ public class Field : MonoBehaviour
         foreach (Cell c in cells)
         {
             if (c.Position == v2) return c;
+        }
+        return null;
+    }
+    
+    public Cell GetCell(int id)
+    {
+        foreach (Cell c in cells)
+        {
+            if (c.ID == id) return c;
         }
         return null;
     }
@@ -97,6 +111,69 @@ public class Field : MonoBehaviour
                 cells[cells.Count - 1].Free = false;
                 frame.text = "ПОБЕДА!";
                 audioManager.Play("Win");
+            }
+        }
+        
+        if (count == cells.Count - 3)
+        {
+            if (el.Count != 0) el.Clear();
+
+            foreach (Cell c in cells)
+            {
+                if (!c.Check && c.Element != null)
+                {
+                    el.Add(c.ID);
+                }
+            }
+        }
+            
+        if (reversBtn == null) return;
+
+        reversBtn.interactable = count == cells.Count - 3;
+    }
+
+    public void ReversElements()
+    {
+        if (el.Count != 2) return;
+
+        Vector2 pos1 = new Vector2 (GetCell(el[0]).Position.x, GetCell(el[0]).Position.y);
+        Vector2 pos2 = new Vector2 (GetCell(el[1]).Position.x, GetCell(el[1]).Position.y);
+
+        int id = 0;
+        
+        foreach (Cell c in cells)
+        {
+            if (c.Element == null)
+            {
+                id = c.ID;
+                GetCell(el[0]).Element.MoveToCell(c.Position);
+                break;
+            }
+        }
+
+        GetCell(el[1]).Element.MoveToCell(pos1);
+        GetCell(id).Element.MoveToCell(pos2);
+
+        foreach (Cell c in cells)
+        {
+            if (c.Element == null)
+            {
+                c.Check = false;
+                c.Free = true;
+                break;
+            }
+        }
+        
+        Change();
+    }
+
+    private void CellCheck()
+    {
+        foreach (Cell c in cells)
+        {
+            if (c.ID == c.Element?.ID)
+            {
+                c.Check = true;
             }
         }
     }

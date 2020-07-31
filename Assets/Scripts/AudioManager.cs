@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
-    private Sound[] sounds;
+    private Sound[] sounds = null;
 
     public static AudioManager instance;
 

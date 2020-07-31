@@ -8,6 +8,8 @@ public class Cell
     public bool Check { get; set; }
     public bool Free { get; set; }
 
+    public Element Element { get; set; }
+
     public Cell(int id, Vector2 position, Transform parent)
     {
         ID = id;

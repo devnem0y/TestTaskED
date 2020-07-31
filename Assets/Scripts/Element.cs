@@ -9,15 +9,20 @@ public class Element : MonoBehaviour
     [SerializeField]
     private int id;
 
-    public int GetId() { return id; }
-
+    public int ID => id;
+    public Vector2 Position
+    {
+        get => transform.position;
+        set => transform.position = value;
+    }
+    
     private void Awake()
     {
         field = FindObjectOfType<Field>();
         audioManager = FindObjectOfType<AudioManager>();
     }
-
-    private void OnMouseDown()
+    
+    private void OnClickEl()
     {
         List<Vector2> vectors = new List<Vector2>();
         FindingBorder(vectors);
@@ -26,26 +31,34 @@ public class Element : MonoBehaviour
         {
             if (field.GetCell(v).Free)
             {
-                field.GetCell(transform.position).Free = true;
-                field.GetCell(transform.position).Check = false;
-                transform.position = v;
-                field.GetCell(v).Free = false;
-                if (field.GetCell(v).ID == id) field.GetCell(v).Check = true;
+                MoveToCell(v, true);
                 audioManager.Play("ElementClick");
                 break;
             }
         }
     }
 
+    public void MoveToCell(Vector2 cellPosition, bool isClick = false)
+    {
+        field.GetCell(Position).Free = isClick;
+        field.GetCell(Position).Element = null;
+        field.GetCell(Position).Check = false;
+        Position = cellPosition;
+        field.GetCell(cellPosition).Free = false;
+        field.GetCell(cellPosition).Element = this;
+        field.GetCell(ID).Check = field.GetCell(cellPosition).ID == ID;
+    }
+    
     private void OnMouseUp()
     {
+        OnClickEl();
         field.Change();
     }
 
     private void FindingBorder(List<Vector2> v2)
     {
-        float x = transform.position.x;
-        float y = transform.position.y;
+        float x = Position.x;
+        float y = Position.y;
 
         if (y + 1 <= field.MaxY) v2.Add(new Vector2(x, y + 1));
         if (x + 1 <= field.MinX * -1) v2.Add(new Vector2(x + 1, y));
