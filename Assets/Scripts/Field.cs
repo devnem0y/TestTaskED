@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +13,6 @@ public class Field : MonoBehaviour
     [SerializeField]
     private List<GameObject> Elements = new List<GameObject>();
 
-    [Space, SerializeField]
-    private Text frame = null;
-    
     [SerializeField]
     private Button reversBtn = null;
     
@@ -26,27 +22,22 @@ public class Field : MonoBehaviour
 
     private List<int> el = new List<int>();
 
-    public Text timer = null;
-    public Text progress = null;
-
     private void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        Dispatcher.OnChangeElement += ChangeElement;
     }
 
+    private void OnDestroy()
+    {
+        Dispatcher.OnChangeElement -= ChangeElement;
+    }
+    
     private void Start()
     {
         Create();
-        Generation();
-        CellCheck();
-        Change();
-        SessionData.Clock.Clear();
-        SessionData.Clock.Start();
-        SessionData.progressCounter = 0;
-        StartCoroutine(TimerUpdate());
     }
 
-    private void Create()
+    public void Create()
     {
         MinX = ((width - 1) / 2f) * -1;
         MaxY = ((height - 1) / 2f);
@@ -62,6 +53,8 @@ public class Field : MonoBehaviour
                 id++;
             }
         }
+        
+        Generation();
     }
 
     private void Generation()
@@ -81,6 +74,9 @@ public class Field : MonoBehaviour
                 }
             }
         }
+        
+        CellCheck();
+        Change();
     }
 
     public Cell GetCell(Vector2 v2)
@@ -101,7 +97,7 @@ public class Field : MonoBehaviour
         return null;
     }
 
-    public void Change()
+    private void Change()
     {
         int count = 0;
 
@@ -114,12 +110,10 @@ public class Field : MonoBehaviour
         {
             if (Elements.Count != 0)
             {
-                SessionData.Clock.Stop();
+                Dispatcher.Send(Event.ON_WIN);
                 Instantiate(Elements[0], new Vector2(cells[cells.Count - 1].Position.x, cells[cells.Count - 1].Position.y), Quaternion.identity, transform);
                 Elements.RemoveAt(0);
                 cells[cells.Count - 1].Free = false;
-                frame.text = "ПОБЕДА!";
-                audioManager.Play("Win");
             }
         }
         
@@ -155,13 +149,13 @@ public class Field : MonoBehaviour
             if (c.Element == null)
             {
                 id = c.ID;
-                GetCell(el[0]).Element.MoveToCell(c.Position);
+                MoveToCell(GetCell(el[0]).Element, c.Position);
                 break;
             }
         }
 
-        GetCell(el[1]).Element.MoveToCell(pos1);
-        GetCell(id).Element.MoveToCell(pos2);
+        MoveToCell(GetCell(el[1]).Element, pos1);
+        MoveToCell(GetCell(id).Element, pos2);
 
         foreach (Cell c in cells)
         {
@@ -187,15 +181,41 @@ public class Field : MonoBehaviour
         }
     }
 
-    private IEnumerator TimerUpdate()
+    private void ChangeElement(Element element)
     {
-        while (SessionData.Clock.Hour < 24)
-        {
-            SessionData.Clock.Update();
-            timer.text = SessionData.Clock.Display;
-            yield return null;
-        }
+        List<Vector2> vectors = new List<Vector2>();
+        FindingBorder(element.Position, vectors);
 
-        SessionData.Clock.Stop();
+        foreach (Vector2 v in vectors)
+        {
+            if (GetCell(v).Free)
+            {
+                MoveToCell(element, v, true);
+                break;
+            }
+        }
+    }
+    private void FindingBorder(Vector2 elementPosition, List<Vector2> v2)
+    {
+        float x = elementPosition.x;
+        float y = elementPosition.y;
+
+        if (y + 1 <= MaxY) v2.Add(new Vector2(x, y + 1));
+        if (x + 1 <= MinX * -1) v2.Add(new Vector2(x + 1, y));
+        if (y - 1 >= MaxY * -1) v2.Add(new Vector2(x, y - 1));
+        if (x - 1 >= MinX) v2.Add(new Vector2(x - 1, y));
+    }
+    
+    private void MoveToCell(Element element, Vector2 cellPosition, bool isClick = false)
+    {
+        GetCell(element.Position).Free = isClick;
+        GetCell(element.Position).Element = null;
+        GetCell(element.Position).Check = false;
+        element.Position = cellPosition;
+        GetCell(cellPosition).Free = false;
+        GetCell(cellPosition).Element = element;
+        GetCell(element.ID).Check = GetCell(cellPosition).ID == element.ID;
+        
+        Dispatcher.Send(Event.ON_CLICK_ELEMENT);
     }
 }
