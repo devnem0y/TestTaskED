@@ -10,7 +10,7 @@ public class Session : MonoBehaviour
     private readonly Clock clock = new Clock();
 
     [SerializeField]
-    private SessionWindowsUI ui;
+    private SessionWindowsUI ui = null;
 
     private void Awake()
     {

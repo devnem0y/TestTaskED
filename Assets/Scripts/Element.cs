@@ -3,7 +3,7 @@
 public class Element : MonoBehaviour
 {
     [SerializeField]
-    private int id;
+    private int id = 0;
 
     public int ID => id;
     public Vector2 Position
