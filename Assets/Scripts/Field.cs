@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,9 @@ public class Field : MonoBehaviour
 
     private List<int> el = new List<int>();
 
+    public Text timer = null;
+    public Text progress = null;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -36,6 +40,10 @@ public class Field : MonoBehaviour
         Generation();
         CellCheck();
         Change();
+        SessionData.Clock.Clear();
+        SessionData.Clock.Start();
+        SessionData.progressCounter = 0;
+        StartCoroutine(TimerUpdate());
     }
 
     private void Create()
@@ -106,6 +114,7 @@ public class Field : MonoBehaviour
         {
             if (Elements.Count != 0)
             {
+                SessionData.Clock.Stop();
                 Instantiate(Elements[0], new Vector2(cells[cells.Count - 1].Position.x, cells[cells.Count - 1].Position.y), Quaternion.identity, transform);
                 Elements.RemoveAt(0);
                 cells[cells.Count - 1].Free = false;
@@ -176,5 +185,17 @@ public class Field : MonoBehaviour
                 c.Check = true;
             }
         }
+    }
+
+    private IEnumerator TimerUpdate()
+    {
+        while (SessionData.Clock.Hour < 24)
+        {
+            SessionData.Clock.Update();
+            timer.text = SessionData.Clock.Display;
+            yield return null;
+        }
+
+        SessionData.Clock.Stop();
     }
 }

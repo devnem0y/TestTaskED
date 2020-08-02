@@ -40,6 +40,9 @@ public class Element : MonoBehaviour
 
     public void MoveToCell(Vector2 cellPosition, bool isClick = false)
     {
+        SessionData.progressCounter++;
+        field.progress.text = SessionData.progressCounter.ToString();
+        
         field.GetCell(Position).Free = isClick;
         field.GetCell(Position).Element = null;
         field.GetCell(Position).Check = false;
