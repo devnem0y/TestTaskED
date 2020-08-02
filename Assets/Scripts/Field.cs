@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Field : MonoBehaviour
 {
@@ -12,15 +11,15 @@ public class Field : MonoBehaviour
     private int height = 3;
     [SerializeField]
     private List<GameObject> Elements = new List<GameObject>();
-
-    [SerializeField]
-    private Button reversBtn = null;
     
-    public float MinX { get; set; }
-    public float MaxY { get; set; }
     private List<Cell> cells = new List<Cell>();
-
     private List<int> el = new List<int>();
+
+    private int count;
+    public bool IsChangeElement => count == cells.Count - 3;
+
+    private float MinX { get; set; }
+    private float MaxY { get; set; }
 
     private void Awake()
     {
@@ -30,11 +29,6 @@ public class Field : MonoBehaviour
     private void OnDestroy()
     {
         Dispatcher.OnChangeElement -= ChangeElement;
-    }
-    
-    private void Start()
-    {
-        Create();
     }
 
     public void Create()
@@ -99,7 +93,7 @@ public class Field : MonoBehaviour
 
     private void Change()
     {
-        int count = 0;
+        count = 0;
 
         foreach (Cell c in cells)
         {
@@ -129,10 +123,8 @@ public class Field : MonoBehaviour
                 }
             }
         }
-            
-        if (reversBtn == null) return;
-
-        reversBtn.interactable = count == cells.Count - 3;
+        
+        Dispatcher.Send(Event.ON_CHANGE_FIELD);
     }
 
     public void ReversElements()
@@ -194,6 +186,8 @@ public class Field : MonoBehaviour
                 break;
             }
         }
+        
+        Change();
     }
     private void FindingBorder(Vector2 elementPosition, List<Vector2> v2)
     {

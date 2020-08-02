@@ -245,6 +245,7 @@ MonoBehaviour:
   ui:
     labelProgressCounter: {fileID: 1185158110}
     labelTime: {fileID: 1572211322}
+    btnRevers: {fileID: 764476101}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

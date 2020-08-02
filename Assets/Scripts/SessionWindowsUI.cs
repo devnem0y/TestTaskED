@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -10,6 +8,9 @@ public class SessionWindowsUI
     private Text labelProgressCounter = null;
     [SerializeField]
     private Text labelTime = null;
+    
+    [SerializeField]
+    private Button btnRevers = null;
 
     public void SetProgress(int progress)
     {
@@ -19,5 +20,10 @@ public class SessionWindowsUI
     public void SetTime(string time)
     {
         labelTime.text = time;
+    }
+
+    public void SetButtonReversInteractable(bool isInteractable)
+    {
+        btnRevers.interactable = isInteractable;
     }
 }

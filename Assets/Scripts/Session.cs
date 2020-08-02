@@ -19,6 +19,14 @@ public class Session : MonoBehaviour
         
         Dispatcher.OnClickElement += ClickElement;
         Dispatcher.OnWin += Win;
+        Dispatcher.OnChangeField += ChangeField;
+    }
+    
+    private void OnDestroy()
+    {
+        Dispatcher.OnClickElement -= ClickElement;
+        Dispatcher.OnWin -= ClickElement;
+        Dispatcher.OnChangeField -= ChangeField;
     }
 
     private void Start()
@@ -30,17 +38,16 @@ public class Session : MonoBehaviour
         StartCoroutine(TimerUpdate());
     }
 
-    private void OnDestroy()
-    {
-        Dispatcher.OnClickElement -= ClickElement;
-        Dispatcher.OnWin -= ClickElement;
-    }
-
     private void ClickElement()
     {
         progressCounter++;
         ui.SetProgress(progressCounter);
         audioManager.Play("ElementClick");
+    }
+
+    private void ChangeField()
+    {
+        ui.SetButtonReversInteractable(field.IsChangeElement);
     }
     
     private void Win()
