@@ -7,18 +7,22 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private Sound[] sounds = null;
 
-    public static AudioManager instance;
+    private static AudioManager _instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (_instance != null) return _instance;
+            _instance = FindObjectOfType<AudioManager>();
+            if (_instance == null) _instance = new GameObject().AddComponent<AudioManager>();
+            return _instance;
+        }
+    }
 
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
+        if (_instance != null) Destroy(this);
+        DontDestroyOnLoad(this);
 
         foreach (Sound s in sounds)
         {

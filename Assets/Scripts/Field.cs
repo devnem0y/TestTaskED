@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    private AudioManager audioManager;
-
     [SerializeField, Range(3, 5)]
     private int width = 3;
     [SerializeField, Range(3, 5)]
@@ -13,7 +11,7 @@ public class Field : MonoBehaviour
     private List<GameObject> Elements = new List<GameObject>();
     
     private List<Cell> cells = new List<Cell>();
-    private List<int> el = new List<int>();
+    private List<int> elementId = new List<int>();
 
     private int count;
     public bool IsChangeElement => count == cells.Count - 3;
@@ -113,13 +111,13 @@ public class Field : MonoBehaviour
         
         if (count == cells.Count - 3)
         {
-            if (el.Count != 0) el.Clear();
+            if (elementId.Count != 0) elementId.Clear();
 
             foreach (Cell c in cells)
             {
                 if (!c.Check && c.Element != null)
                 {
-                    el.Add(c.ID);
+                    elementId.Add(c.ID);
                 }
             }
         }
@@ -129,10 +127,10 @@ public class Field : MonoBehaviour
 
     public void ReversElements()
     {
-        if (el.Count != 2) return;
+        if (elementId.Count != 2) return;
 
-        Vector2 pos1 = new Vector2 (GetCell(el[0]).Position.x, GetCell(el[0]).Position.y);
-        Vector2 pos2 = new Vector2 (GetCell(el[1]).Position.x, GetCell(el[1]).Position.y);
+        Vector2 pos1 = new Vector2 (GetCell(elementId[0]).Position.x, GetCell(elementId[0]).Position.y);
+        Vector2 pos2 = new Vector2 (GetCell(elementId[1]).Position.x, GetCell(elementId[1]).Position.y);
 
         int id = 0;
         
@@ -141,12 +139,12 @@ public class Field : MonoBehaviour
             if (c.Element == null)
             {
                 id = c.ID;
-                MoveToCell(GetCell(el[0]).Element, c.Position);
+                MoveToCell(GetCell(elementId[0]).Element, c.Position);
                 break;
             }
         }
 
-        MoveToCell(GetCell(el[1]).Element, pos1);
+        MoveToCell(GetCell(elementId[1]).Element, pos1);
         MoveToCell(GetCell(id).Element, pos2);
 
         foreach (Cell c in cells)

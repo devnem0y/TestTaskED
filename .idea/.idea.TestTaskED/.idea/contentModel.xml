@@ -15,7 +15,6 @@
           <e p="Field.cs" t="Include" />
           <e p="InputHandler.cs" t="Include" />
           <e p="Session.cs" t="Include" />
-          <e p="SessionData.cs" t="Include" />
           <e p="SessionWindowsUI.cs" t="Include" />
           <e p="Sound.cs" t="Include" />
         </e>

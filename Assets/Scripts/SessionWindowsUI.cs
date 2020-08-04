@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
+[Serializable]
 public class SessionWindowsUI
 {
     [SerializeField]
@@ -26,4 +27,23 @@ public class SessionWindowsUI
     {
         btnRevers.interactable = isInteractable;
     }
+
+    #region TestUIEventButto
+
+    [SerializeField]
+    private Button btnTestEvent = null;
+    public event Action OnTestClick; 
+    
+    public void AddListeners()
+    {
+        btnTestEvent.onClick.AddListener(TestEvent);
+    }
+    private void TestEvent()
+    {
+        OnTestClick?.Invoke();
+        
+        // Animation button and other ui
+    }
+
+    #endregion
 }

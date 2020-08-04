@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Session : MonoBehaviour
 {
-    private AudioManager audioManager;
     private Field field;
     
     private int progressCounter;
@@ -14,19 +13,28 @@ public class Session : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
         field = FindObjectOfType<Field>();
         
         Dispatcher.OnClickElement += ClickElement;
         Dispatcher.OnWin += Win;
         Dispatcher.OnChangeField += ChangeField;
+
+        ui.AddListeners();
+        ui.OnTestClick += Test;
+    }
+
+    private void Test()
+    {
+        Debug.Log("TestEvent");
     }
     
     private void OnDestroy()
     {
         Dispatcher.OnClickElement -= ClickElement;
-        Dispatcher.OnWin -= ClickElement;
+        Dispatcher.OnWin -= Win;
         Dispatcher.OnChangeField -= ChangeField;
+
+        ui.OnTestClick -= Test;
     }
 
     private void Start()
@@ -42,7 +50,7 @@ public class Session : MonoBehaviour
     {
         progressCounter++;
         ui.SetProgress(progressCounter);
-        audioManager.Play("ElementClick");
+        AudioManager.Instance.Play("ElementClick");
     }
 
     private void ChangeField()
@@ -53,7 +61,7 @@ public class Session : MonoBehaviour
     private void Win()
     {
         clock.Stop();
-        audioManager.Play("Win");
+        AudioManager.Instance.Play("Win");
     }
     
     private IEnumerator TimerUpdate()
