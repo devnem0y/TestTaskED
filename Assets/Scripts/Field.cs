@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    [SerializeField, Range(3, 5)]
-    private int width = 3;
-    [SerializeField, Range(3, 5)]
-    private int height = 3;
     [SerializeField]
-    private List<GameObject> Elements = new List<GameObject>();
+    private List<GameObject> _elements = new List<GameObject>();
     
-    private List<Cell> cells = new List<Cell>();
-    private List<int> elementId = new List<int>();
+    private int width => GameManager.Instance.FieldSize;
+    private int height => GameManager.Instance.FieldSize;
+
+    private List<Cell> _cells = new List<Cell>();
+    private List<int> _id = new List<int>();
 
     private int count;
-    public bool IsChangeElement => count == cells.Count - 3;
+    public bool IsChangeElement => count == _cells.Count - 3;
 
     private float MinX { get; set; }
     private float MaxY { get; set; }
@@ -41,7 +41,7 @@ public class Field : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 Cell cell = new Cell(id, new Vector2(MinX + x, MaxY - y), transform);
-                cells.Add(cell);
+                _cells.Add(cell);
                 id++;
             }
         }
@@ -51,18 +51,27 @@ public class Field : MonoBehaviour
 
     private void Generation()
     {
-        if (Elements.Count != 0)
+        if (_elements.Count > (width * height))
         {
-            foreach (Cell c in cells)
+            var index = _elements.IndexOf(_elements.First(x=>x.GetComponent<Element>().ID > (width * height) - 1));
+            if (index > -1)
             {
-                if (Elements.Count != 1)
+                _elements.RemoveRange(index, _elements.Count - index);
+            }
+        }
+
+        if (_elements.Count != 0)
+        {
+            foreach (Cell c in _cells)
+            {
+                if (_elements.Count != 1)
                 {
                     c.Free = false;
-                    int rnd = Random.Range(0, Elements.Count - 1);
-                    GameObject el = Elements[rnd];
+                    int rnd = Random.Range(0, _elements.Count - 1);
+                    GameObject el = _elements[rnd];
                     Instantiate(el, c.Position, Quaternion.identity, transform);
                     c.Element = el.GetComponent<Element>();
-                    Elements.RemoveAt(rnd);
+                    _elements.RemoveAt(rnd);
                 }
             }
         }
@@ -73,7 +82,7 @@ public class Field : MonoBehaviour
 
     public Cell GetCell(Vector2 v2)
     {
-        foreach (Cell c in cells)
+        foreach (Cell c in _cells)
         {
             if (c.Position == v2) return c;
         }
@@ -82,7 +91,7 @@ public class Field : MonoBehaviour
     
     public Cell GetCell(int id)
     {
-        foreach (Cell c in cells)
+        foreach (Cell c in _cells)
         {
             if (c.ID == id) return c;
         }
@@ -93,31 +102,31 @@ public class Field : MonoBehaviour
     {
         count = 0;
 
-        foreach (Cell c in cells)
+        foreach (Cell c in _cells)
         {
             if (c.Check) count++;
         }
 
         if (count == (width * height) - 1)
         {
-            if (Elements.Count != 0)
+            if (_elements.Count != 0)
             {
                 Dispatcher.Send(Event.ON_WIN);
-                Instantiate(Elements[0], new Vector2(cells[cells.Count - 1].Position.x, cells[cells.Count - 1].Position.y), Quaternion.identity, transform);
-                Elements.RemoveAt(0);
-                cells[cells.Count - 1].Free = false;
+                Instantiate(_elements[0], new Vector2(_cells[_cells.Count - 1].Position.x, _cells[_cells.Count - 1].Position.y), Quaternion.identity, transform);
+                _elements.RemoveAt(0);
+                _cells[_cells.Count - 1].Free = false;
             }
         }
         
-        if (count == cells.Count - 3)
+        if (count == _cells.Count - 3)
         {
-            if (elementId.Count != 0) elementId.Clear();
+            if (_id.Count != 0) _id.Clear();
 
-            foreach (Cell c in cells)
+            foreach (Cell c in _cells)
             {
                 if (!c.Check && c.Element != null)
                 {
-                    elementId.Add(c.ID);
+                    _id.Add(c.ID);
                 }
             }
         }
@@ -127,27 +136,27 @@ public class Field : MonoBehaviour
 
     public void ReversElements()
     {
-        if (elementId.Count != 2) return;
+        if (_id.Count != 2) return;
 
-        Vector2 pos1 = new Vector2 (GetCell(elementId[0]).Position.x, GetCell(elementId[0]).Position.y);
-        Vector2 pos2 = new Vector2 (GetCell(elementId[1]).Position.x, GetCell(elementId[1]).Position.y);
+        Vector2 pos1 = new Vector2 (GetCell(_id[0]).Position.x, GetCell(_id[0]).Position.y);
+        Vector2 pos2 = new Vector2 (GetCell(_id[1]).Position.x, GetCell(_id[1]).Position.y);
 
         int id = 0;
         
-        foreach (Cell c in cells)
+        foreach (Cell c in _cells)
         {
             if (c.Element == null)
             {
                 id = c.ID;
-                MoveToCell(GetCell(elementId[0]).Element, c.Position);
+                MoveToCell(GetCell(_id[0]).Element, c.Position);
                 break;
             }
         }
 
-        MoveToCell(GetCell(elementId[1]).Element, pos1);
+        MoveToCell(GetCell(_id[1]).Element, pos1);
         MoveToCell(GetCell(id).Element, pos2);
 
-        foreach (Cell c in cells)
+        foreach (Cell c in _cells)
         {
             if (c.Element == null)
             {
@@ -162,7 +171,7 @@ public class Field : MonoBehaviour
 
     private void CellCheck()
     {
-        foreach (Cell c in cells)
+        foreach (Cell c in _cells)
         {
             if (c.ID == c.Element?.ID)
             {

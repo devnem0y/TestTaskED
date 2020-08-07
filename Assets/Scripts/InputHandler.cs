@@ -20,10 +20,11 @@ public class InputHandler : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void StartScene(string name)
+    public void StartScene(int fieldSize)
     {
+        GameManager.Instance.FieldSize = fieldSize;
         AudioManager.Instance.Play("ButtonClick");
-        SceneManager.LoadScene(name);
+        SceneManager.LoadScene(fieldSize != 0 ? "Game" : "Menu");
     }
 
     public void ReversElements()
