@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ public class Field : MonoBehaviour
     private List<int> _id = new List<int>();
 
     private int count;
-    public bool IsChangeElement => count == _cells.Count - 3;
+    public bool IsChangeElement => count == _cells.Count - 3 && IsStart;
+    public bool IsStart;
 
     private float MinX { get; set; }
     private float MaxY { get; set; }
@@ -60,6 +62,11 @@ public class Field : MonoBehaviour
             }
         }
 
+        StartCoroutine(AddElement(0.07f));
+    }
+
+    private IEnumerator AddElement(float delay)
+    {
         if (_elements.Count != 0)
         {
             foreach (Cell c in _cells)
@@ -72,15 +79,17 @@ public class Field : MonoBehaviour
                     Instantiate(el, c.Position, Quaternion.identity, transform);
                     c.Element = el.GetComponent<Element>();
                     _elements.RemoveAt(rnd);
+                    yield return new WaitForSecondsRealtime(delay);
                 }
             }
         }
         
         CellCheck();
         Change();
+        IsStart = true;
     }
 
-    public Cell GetCell(Vector2 v2)
+    private Cell GetCell(Vector2 v2)
     {
         foreach (Cell c in _cells)
         {
@@ -89,7 +98,7 @@ public class Field : MonoBehaviour
         return null;
     }
     
-    public Cell GetCell(int id)
+    private Cell GetCell(int id)
     {
         foreach (Cell c in _cells)
         {
@@ -182,6 +191,8 @@ public class Field : MonoBehaviour
 
     private void ChangeElement(Element element)
     {
+        if (!IsStart) return;
+        
         List<Vector2> vectors = new List<Vector2>();
         FindingBorder(element.Position, vectors);
 
@@ -193,7 +204,7 @@ public class Field : MonoBehaviour
                 break;
             }
         }
-        
+
         Change();
     }
     private void FindingBorder(Vector2 elementPosition, List<Vector2> v2)

@@ -66,6 +66,8 @@ public class Session : MonoBehaviour
     
     private IEnumerator TimerUpdate()
     {
+        if (!field.IsStart) yield return null;
+        
         while (clock.Hour < 24)
         {
             clock.Update();
