@@ -22,7 +22,7 @@ public class InputHandler : MonoBehaviour
 
     public void StartScene(int fieldSize)
     {
-        GameManager.Instance.FieldSize = fieldSize;
+        GameData.Instance.FieldSize = fieldSize;
         AudioManager.Instance.Play("ButtonClick");
         SceneManager.LoadScene(fieldSize != 0 ? "Game" : "Menu");
     }

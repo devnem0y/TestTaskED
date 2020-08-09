@@ -13,7 +13,7 @@
           <e p="Dispatcher.cs" t="Include" />
           <e p="Element.cs" t="Include" />
           <e p="Field.cs" t="Include" />
-          <e p="GameManager.cs" t="Include" />
+          <e p="GameData.cs" t="Include" />
           <e p="InputHandler.cs" t="Include" />
           <e p="Session.cs" t="Include" />
           <e p="SessionWindowsUI.cs" t="Include" />

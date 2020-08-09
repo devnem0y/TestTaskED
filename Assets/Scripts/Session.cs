@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Session : MonoBehaviour
 {
@@ -20,12 +21,39 @@ public class Session : MonoBehaviour
         Dispatcher.OnChangeField += ChangeField;
 
         ui.AddListeners();
-        ui.OnTestClick += Test;
+        ui.OnPauseClick += Pause;
+        ui.OnReversClick += Revers;
+        ui.OnMenuClick += Menu;
+        ui.OnRestartClick += Restart;
     }
 
-    private void Test()
+    private void Pause()
     {
-        Debug.Log("TestEvent");
+        GameData.Instance.IsPause = !GameData.Instance.IsPause;
+
+        if (GameData.Instance.IsPause)
+        {
+            clock.Stop();
+        }
+        else
+        {
+            clock.Start();
+        }
+    }
+
+    private void Revers()
+    {
+        field.ReversElements();
+    }
+    
+    private void Menu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     private void OnDestroy()
@@ -34,7 +62,10 @@ public class Session : MonoBehaviour
         Dispatcher.OnWin -= Win;
         Dispatcher.OnChangeField -= ChangeField;
 
-        ui.OnTestClick -= Test;
+        ui.OnPauseClick -= Pause;
+        ui.OnReversClick -= Revers;
+        ui.OnMenuClick -= Menu;
+        ui.OnRestartClick -= Restart;
     }
 
     private void Start()
@@ -61,6 +92,7 @@ public class Session : MonoBehaviour
     private void Win()
     {
         clock.Stop();
+        ui.SetButtonPauseInteractable(false);
         AudioManager.Instance.Play("Win");
     }
     
