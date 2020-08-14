@@ -60,6 +60,7 @@ public class Session : MonoBehaviour
     
     private void Menu()
     {
+        AudioManager.instance.StopMusic("Music_1");
         SceneManager.LoadScene("Menu");
     }
     
@@ -91,6 +92,8 @@ public class Session : MonoBehaviour
         clock.Clear();
         clock.Start();
         StartCoroutine(TimerUpdate());
+
+        AudioManager.instance.PlayMusic("Music_1");
     }
 
     private void ClickElement()
@@ -109,6 +112,7 @@ public class Session : MonoBehaviour
     {
         clock.Stop();
         ui.SetButtonPauseInteractable(false);
+        AudioManager.instance.StopMusic("Music_1");
         AudioManager.instance.PlaySound("Win");
     }
     

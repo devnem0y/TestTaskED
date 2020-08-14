@@ -65,6 +65,18 @@ public class AudioManager : MonoBehaviour
         m.source.Play();
     }
 
+    public void StopMusic(string name)
+    {
+        Track m = Array.Find(musics, music => music.name == name);
+        if (m == null)
+        {
+            Debug.LogWarning("Music: " + name + " not found!");
+            return;
+        }
+
+        m.source.Stop();
+    }
+
     public void OffVolumeSounds(bool isVolume)
     {
         foreach (Track s in sounds)
