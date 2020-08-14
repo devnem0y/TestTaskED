@@ -241,7 +241,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1986212603}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Quit
         m_Mode: 1
@@ -627,19 +627,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 333477164}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1986212603}
-        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: StartScene
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: Level_3x3
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &333477164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,19 +747,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 418073190}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1986212603}
-        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: StartScene
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: Level_5x5
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &418073190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +916,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -955,6 +932,31 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f34601fadab39444a723ebf173aff51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui:
+    btnSound: {fileID: 968580607}
+    btnMusic: {fileID: 496289771}
+    btnQuit: {fileID: 54689762}
+    btn3x3: {fileID: 333477163}
+    btn4x4: {fileID: 1422208567}
+    btn5x5: {fileID: 418073189}
+    spritesButtonSound:
+    - {fileID: 21300000, guid: c159ddc86bb94b84888ab4ebb843b3c9, type: 3}
+    - {fileID: 21300000, guid: 3f288eba208f48b4e8ffaeb6c82e3075, type: 3}
+    spritesButtonMusic:
+    - {fileID: 21300000, guid: 526cc70d5930a5646bbb49a4c8c19148, type: 3}
+    - {fileID: 21300000, guid: 3122bd085f066bd4e9edf72092623d12, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1569,19 +1571,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1422208568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1986212603}
-        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: StartScene
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: Level_4x4
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1422208568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,7 +1797,6 @@ GameObject:
   - component: {fileID: 1986212601}
   - component: {fileID: 1986212600}
   - component: {fileID: 1986212599}
-  - component: {fileID: 1986212603}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1898,19 +1887,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1986212603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986212598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f34601fadab39444a723ebf173aff51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reversBtn: {fileID: 0}
 --- !u!1 &1996722941
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,3 +2090,4 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  musics: []

@@ -21,7 +21,6 @@ public class Session : MonoBehaviour
         Dispatcher.OnChangeField += ChangeField;
 
         ui.AddListeners();
-        ui.OnPauseClick += Pause;
         ui.OnSettingsSoundClick += SettingsSound;
         ui.OnSettingsMusicClick += SettingsMusic;
         ui.OnPauseClick += Pause;
@@ -79,6 +78,8 @@ public class Session : MonoBehaviour
         ui.OnReversClick -= Revers;
         ui.OnMenuClick -= Menu;
         ui.OnRestartClick -= Restart;
+        ui.OnSettingsSoundClick -= SettingsSound;
+        ui.OnSettingsMusicClick -= SettingsMusic;
     }
 
     private void Start()
