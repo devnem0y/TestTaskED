@@ -22,6 +22,9 @@ public class Session : MonoBehaviour
 
         ui.AddListeners();
         ui.OnPauseClick += Pause;
+        ui.OnSettingsSoundClick += SettingsSound;
+        ui.OnSettingsMusicClick += SettingsMusic;
+        ui.OnPauseClick += Pause;
         ui.OnReversClick += Revers;
         ui.OnMenuClick += Menu;
         ui.OnRestartClick += Restart;
@@ -29,9 +32,9 @@ public class Session : MonoBehaviour
 
     private void Pause()
     {
-        GameData.Instance.IsPause = !GameData.Instance.IsPause;
+        GameData.instance.IsPause = !GameData.instance.IsPause;
 
-        if (GameData.Instance.IsPause)
+        if (GameData.instance.IsPause)
         {
             clock.Stop();
         }
@@ -39,6 +42,16 @@ public class Session : MonoBehaviour
         {
             clock.Start();
         }
+    }
+
+    private void SettingsSound()
+    {
+        GameData.instance.IsSound = !GameData.instance.IsSound;
+    }
+
+    private void SettingsMusic()
+    {
+        GameData.instance.IsMusic = !GameData.instance.IsMusic;
     }
 
     private void Revers()
@@ -70,6 +83,8 @@ public class Session : MonoBehaviour
 
     private void Start()
     {
+        ui.Aplay();
+
         field.Create();
 
         clock.Clear();
@@ -81,7 +96,7 @@ public class Session : MonoBehaviour
     {
         progressCounter++;
         ui.SetProgress(progressCounter);
-        AudioManager.Instance.Play("ElementClick");
+        AudioManager.instance.PlaySound("ElementClick");
     }
 
     private void ChangeField()
@@ -93,7 +108,7 @@ public class Session : MonoBehaviour
     {
         clock.Stop();
         ui.SetButtonPauseInteractable(false);
-        AudioManager.Instance.Play("Win");
+        AudioManager.instance.PlaySound("Win");
     }
     
     private IEnumerator TimerUpdate()

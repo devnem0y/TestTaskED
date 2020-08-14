@@ -15,6 +15,8 @@ public class SessionWindowsUI
 
     #region ButtonEvents
 
+    public event Action OnSettingsSoundClick; 
+    public event Action OnSettingsMusicClick; 
     public event Action OnPauseClick; 
     public event Action OnMenuClick; 
     public event Action OnRestartClick;
@@ -22,6 +24,10 @@ public class SessionWindowsUI
 
     #endregion
     
+    [SerializeField]
+    private Button btnSound = null;
+    [SerializeField]
+    private Button btnMusic = null;
     [SerializeField]
     private Button btnRevers = null;
     [SerializeField]
@@ -32,9 +38,15 @@ public class SessionWindowsUI
     private Button btnPause = null;
     [SerializeField]
     private List<Sprite> spritesButtonPause;
+    [SerializeField]
+    private List<Sprite> spritesButtonSound;
+    [SerializeField]
+    private List<Sprite> spritesButtonMusic;
 
     public void AddListeners()
     {
+        btnSound.onClick.AddListener(SettingsSoundEvent);
+        btnMusic.onClick.AddListener(SettingsMusicEvent);
         btnPause.onClick.AddListener(PauseEvent);
         btnMenu.onClick.AddListener(MenuEvent);
         btnRestart.onClick.AddListener(RestartEvent);
@@ -66,12 +78,12 @@ public class SessionWindowsUI
         OnPauseClick?.Invoke();
         
         // Animation button and other ui
-        AudioManager.Instance.Play("ButtonClick");
-        btnPause.gameObject.GetComponent<Image>().sprite = GameData.Instance.IsPause ? spritesButtonPause[0] : spritesButtonPause[1];
+        AudioManager.instance.PlaySound("ButtonClick");
+        btnPause.gameObject.GetComponent<Image>().sprite = GameData.instance.IsPause ? spritesButtonPause[0] : spritesButtonPause[1];
         btnPause.targetGraphic.LayoutComplete();
-        pauseLine.SetActive(GameData.Instance.IsPause);
+        pauseLine.SetActive(GameData.instance.IsPause);
 
-        if (GameData.Instance.IsPause)
+        if (GameData.instance.IsPause)
         {
             btnMenu.interactable = false;
             btnRestart.interactable = false;
@@ -90,7 +102,7 @@ public class SessionWindowsUI
         OnMenuClick?.Invoke();
         
         // Animation button and other ui
-        AudioManager.Instance.Play("ButtonClick");
+        AudioManager.instance.PlaySound("ButtonClick");
     }
     
     private void RestartEvent()
@@ -98,7 +110,7 @@ public class SessionWindowsUI
         OnRestartClick?.Invoke();
         
         // Animation button and other ui
-        AudioManager.Instance.Play("ButtonClick");
+        AudioManager.instance.PlaySound("ButtonClick");
     }
     
     private void ReversEvent()
@@ -106,7 +118,31 @@ public class SessionWindowsUI
         OnReversClick?.Invoke();
         
         // Animation button and other ui
-        AudioManager.Instance.Play("ButtonClick");
+        AudioManager.instance.PlaySound("ButtonClick");
         btnRevers.interactable = false;
+    }
+
+    private void SettingsSoundEvent()
+    {
+        OnSettingsSoundClick?.Invoke();
+        
+        // Animation button and other ui
+        btnSound.gameObject.GetComponent<Image>().sprite = GameData.instance.IsSound ? spritesButtonSound[0] : spritesButtonSound[1];
+        AudioManager.instance.PlaySound("ButtonClick");
+    }
+
+    private void SettingsMusicEvent()
+    {
+        OnSettingsMusicClick?.Invoke();
+        
+        // Animation button and other ui
+        btnMusic.gameObject.GetComponent<Image>().sprite = GameData.instance.IsMusic ? spritesButtonMusic[0] : spritesButtonMusic[1];
+        AudioManager.instance.PlaySound("ButtonClick");
+    }
+
+    public void Aplay()
+    {
+        btnSound.gameObject.GetComponent<Image>().sprite = GameData.instance.IsSound ? spritesButtonSound[0] : spritesButtonSound[1];
+        btnMusic.gameObject.GetComponent<Image>().sprite = GameData.instance.IsMusic ? spritesButtonMusic[0] : spritesButtonMusic[1];
     }
 }

@@ -574,6 +574,8 @@ MonoBehaviour:
     labelProgressCounter: {fileID: 1185158110}
     labelTime: {fileID: 802533267}
     pauseLine: {fileID: 1445490897}
+    btnSound: {fileID: 1500532903}
+    btnMusic: {fileID: 639593015}
     btnRevers: {fileID: 764476101}
     btnMenu: {fileID: 690323373}
     btnRestart: {fileID: 1781221984}
@@ -581,6 +583,12 @@ MonoBehaviour:
     spritesButtonPause:
     - {fileID: 21300000, guid: e8ed137fb3cf3af488c05233345f7367, type: 3}
     - {fileID: 21300000, guid: 8b8470c72813ccd469ef33943072232a, type: 3}
+    spritesButtonSound:
+    - {fileID: 21300000, guid: c159ddc86bb94b84888ab4ebb843b3c9, type: 3}
+    - {fileID: 21300000, guid: 3f288eba208f48b4e8ffaeb6c82e3075, type: 3}
+    spritesButtonMusic:
+    - {fileID: 21300000, guid: 526cc70d5930a5646bbb49a4c8c19148, type: 3}
+    - {fileID: 21300000, guid: 3122bd085f066bd4e9edf72092623d12, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

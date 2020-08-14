@@ -16,27 +16,27 @@ public class InputHandler : MonoBehaviour
 
     public void RestartLevel()
     {
-        AudioManager.Instance.Play("ButtonClick");
+        AudioManager.instance.PlaySound("ButtonClick");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void StartScene(int fieldSize)
     {
-        GameData.Instance.FieldSize = fieldSize;
-        AudioManager.Instance.Play("ButtonClick");
+        GameData.instance.FieldSize = fieldSize;
+        AudioManager.instance.PlaySound("ButtonClick");
         SceneManager.LoadScene(fieldSize != 0 ? "Game" : "Menu");
     }
 
     public void ReversElements()
     {
-        AudioManager.Instance.Play("ButtonClick");
+        AudioManager.instance.PlaySound("ButtonClick");
         field.ReversElements();
         reversBtn.interactable = false;
     }
 
     public void Quit()
     {
-        AudioManager.Instance.Play("ButtonClick");
+        AudioManager.instance.PlaySound("ButtonClick");
         Application.Quit();
     }
 }

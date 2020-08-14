@@ -8,8 +8,8 @@ public class Field : MonoBehaviour
     [SerializeField]
     private List<GameObject> _elements = new List<GameObject>();
     
-    private int width => GameData.Instance.FieldSize;
-    private int height => GameData.Instance.FieldSize;
+    private int width => GameData.instance.FieldSize;
+    private int height => GameData.instance.FieldSize;
 
     private List<Cell> _cells = new List<Cell>();
     private List<int> _id = new List<int>();
@@ -191,7 +191,7 @@ public class Field : MonoBehaviour
 
     private void ChangeElement(Element element)
     {
-        if (!IsStart || GameData.Instance.IsPause) return;
+        if (!IsStart || GameData.instance.IsPause) return;
         
         List<Vector2> vectors = new List<Vector2>();
         FindingBorder(element.Position, vectors);
