@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 4254202649229995213}
   - component: {fileID: 3338385298206899230}
   - component: {fileID: 5424949574891110405}
+  - component: {fileID: -4549848111514222368}
   m_Layer: 0
   m_Name: part_013
   m_TagString: Untagged
@@ -352,6 +353,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 12
+--- !u!95 &-4549848111514222368
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6832829398094267386}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9cb327de4b6e1eb41b2945c020ad5325, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8955790991781225209
 GameObject:
   m_ObjectHideFlags: 0
