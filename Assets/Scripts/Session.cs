@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Session : MonoBehaviour
 {
@@ -11,6 +13,12 @@ public class Session : MonoBehaviour
 
     [SerializeField]
     private SessionWindowsUI ui = null;
+
+    [SerializeField]
+    private GameObject background;
+
+    [SerializeField]
+    private List<Sprite> backgrounds;
 
     private void Awake()
     {
@@ -85,6 +93,9 @@ public class Session : MonoBehaviour
 
     private void Start()
     {
+        int rnd = Random.Range(0, backgrounds.Count);
+        background.GetComponent<SpriteRenderer>().sprite = backgrounds[rnd];
+
         ui.Aplay();
 
         field.Create();

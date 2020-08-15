@@ -14,10 +14,11 @@
           <e p="Element.cs" t="Include" />
           <e p="Field.cs" t="Include" />
           <e p="GameData.cs" t="Include" />
-          <e p="InputHandler.cs" t="Include" />
+          <e p="Menu.cs" t="Include" />
+          <e p="MenuWindowsUI.cs" t="Include" />
           <e p="Session.cs" t="Include" />
           <e p="SessionWindowsUI.cs" t="Include" />
-          <e p="Sound.cs" t="Include" />
+          <e p="Track.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
