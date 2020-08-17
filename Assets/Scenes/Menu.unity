@@ -2113,7 +2113,7 @@ MonoBehaviour:
   musics:
   - name: Music_1
     clip: {fileID: 8300000, guid: cb856b1169df020409b70a773d2533f7, type: 3}
-    volume: 0.12
+    volume: 0.35
     pitch: 1
     loop: 1
     source: {fileID: 0}
