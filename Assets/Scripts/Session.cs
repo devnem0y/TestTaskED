@@ -76,6 +76,7 @@ public class Session : MonoBehaviour
     
     private void Restart()
     {
+        AudioManager.instance.StopMusic($"Music_{randomMusicIndex}");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     

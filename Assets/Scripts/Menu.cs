@@ -24,11 +24,14 @@ public class Menu : MonoBehaviour
         ui.OnSettingsSoundClick += SettingsSound;
         ui.OnSettingsMusicClick += SettingsMusic;
         ui.OnStartSession += StartSession;
+        
+        AudioManager.instance.PlayMusic("Music_0");
     }
     
     public void StartSession(int fieldSize)
     {
         GameData.instance.FieldSize = fieldSize;
+        AudioManager.instance.StopMusic("Music_0");
         SceneManager.LoadScene("Game");
     }
 

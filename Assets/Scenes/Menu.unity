@@ -2111,9 +2111,39 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   musics:
+  - name: Music_0
+    clip: {fileID: 8300000, guid: 6a97aa2635a1b2748a7aa08b2bec4136, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
   - name: Music_1
     clip: {fileID: 8300000, guid: cb856b1169df020409b70a773d2533f7, type: 3}
-    volume: 0.35
+    volume: 0.25
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music_2
+    clip: {fileID: 8300000, guid: ddec7eeda8e08f04ab5b2702c1a5343f, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music_3
+    clip: {fileID: 8300000, guid: b549a9ba448e04b4ba990d1f7cae2921, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music_4
+    clip: {fileID: 8300000, guid: f075bac53c0a77e4583f210eb063a492, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music_5
+    clip: {fileID: 8300000, guid: 78038281e9a0c8046976838a42e999dd, type: 3}
+    volume: 0.25
     pitch: 1
     loop: 1
     source: {fileID: 0}
