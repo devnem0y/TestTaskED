@@ -20,6 +20,8 @@ public class Session : MonoBehaviour
     [SerializeField]
     private List<Sprite> backgrounds;
 
+    private int randomMusicIndex;
+
     private void Awake()
     {
         field = FindObjectOfType<Field>();
@@ -68,7 +70,7 @@ public class Session : MonoBehaviour
     
     private void Menu()
     {
-        AudioManager.instance.StopMusic("Music_1");
+        AudioManager.instance.StopMusic($"Music_{randomMusicIndex}");
         SceneManager.LoadScene("Menu");
     }
     
@@ -93,9 +95,8 @@ public class Session : MonoBehaviour
 
     private void Start()
     {
-        int rnd = Random.Range(0, backgrounds.Count);
-        background.GetComponent<SpriteRenderer>().sprite = backgrounds[rnd];
-
+        RandomBackground();
+        
         ui.Aplay();
 
         field.Create();
@@ -104,7 +105,19 @@ public class Session : MonoBehaviour
         clock.Start();
         StartCoroutine(TimerUpdate());
 
-        AudioManager.instance.PlayMusic("Music_1");
+        RandomMusic();
+    }
+
+    private void RandomBackground()
+    {
+        var rnd = Random.Range(0, backgrounds.Count);
+        background.GetComponent<SpriteRenderer>().sprite = backgrounds[rnd];
+    }
+    
+    private void RandomMusic()
+    {
+        randomMusicIndex = Random.Range(1, 5); //TODO: hard-code {max: 5}
+        AudioManager.instance.PlayMusic($"Music_{randomMusicIndex}");
     }
 
     private void ClickElement()
@@ -123,7 +136,7 @@ public class Session : MonoBehaviour
     {
         clock.Stop();
         ui.SetButtonPauseInteractable(false);
-        AudioManager.instance.StopMusic("Music_1");
+        AudioManager.instance.StopMusic($"Music_{randomMusicIndex}");
         AudioManager.instance.PlaySound("Win");
     }
     
