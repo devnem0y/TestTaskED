@@ -41,6 +41,10 @@ public class MenuWindowsUI
 
     public void Aplay()
     {
+        #if PLATFORM_WEBGL
+        btnQuit.gameObject.SetActive(false);
+        #endif
+        
         btnSound.gameObject.GetComponent<Image>().sprite = GameData.instance.IsSound ? spritesButtonSound[0] : spritesButtonSound[1];
         btnMusic.gameObject.GetComponent<Image>().sprite = GameData.instance.IsMusic ? spritesButtonMusic[0] : spritesButtonMusic[1];
     }
