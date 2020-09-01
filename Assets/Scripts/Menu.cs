@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
     private void OnDestroy()
     {
         ui.OnQuit -= Quit;
+        ui.OnOpenURL -= OpenURL;
         ui.OnSettingsSoundClick -= SettingsSound;
         ui.OnSettingsMusicClick -= SettingsMusic;
         ui.OnStartSession -= StartSession;
@@ -21,6 +22,7 @@ public class Menu : MonoBehaviour
 
         ui.AddListeners();
         ui.OnQuit += Quit;
+        ui.OnOpenURL += OpenURL;
         ui.OnSettingsSoundClick += SettingsSound;
         ui.OnSettingsMusicClick += SettingsMusic;
         ui.OnStartSession += StartSession;
@@ -38,6 +40,11 @@ public class Menu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    
+    public void OpenURL()
+    {
+        Application.OpenURL(ui.UrlAppGooglePlay);
     }
 
     private void SettingsSound()

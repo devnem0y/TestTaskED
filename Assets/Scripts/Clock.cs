@@ -4,8 +4,7 @@ public class Clock
 {
     private const float SPEED = 1;
     
-    private float startTime;
-
+    public float StartTime { get; private set; }
     public int Second { get; private set; }
     public int Minute { get; private set; }
     public int Hour { get; private set; }
@@ -27,11 +26,11 @@ public class Clock
 
         if (!isRun) return;
 
-        startTime += Time.deltaTime * SPEED;
+        StartTime += Time.deltaTime * SPEED;
 
-        Hour = (int) Mathf.Floor((startTime % 216000) / 3600);
-        Minute = (int) Mathf.Floor((startTime % 3600) / 60);
-        Second = (int) Mathf.Floor(startTime % 60);
+        Hour = (int) Mathf.Floor((StartTime % 216000) / 3600);
+        Minute = (int) Mathf.Floor((StartTime % 3600) / 60);
+        Second = (int) Mathf.Floor(StartTime % 60);
     }
     
     public void Start()
@@ -46,7 +45,7 @@ public class Clock
 
     public void Clear()
     {
-        startTime = 0;
+        StartTime = 0;
         Second = 0;
         Minute = 0;
         Hour = 0;

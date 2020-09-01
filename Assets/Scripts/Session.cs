@@ -136,9 +136,7 @@ public class Session : MonoBehaviour
     private void Win()
     {
         clock.Stop();
-        ui.SetButtonPauseInteractable(false);
-        AudioManager.instance.StopMusic($"Music_{randomMusicIndex}");
-        AudioManager.instance.PlaySound("Win");
+        StartCoroutine(ShowWindowsWin(1.1f));
     }
     
     private IEnumerator TimerUpdate()
@@ -153,5 +151,15 @@ public class Session : MonoBehaviour
         }
 
         clock.Stop();
+    }
+    
+    private IEnumerator ShowWindowsWin(float time)
+    {
+        AudioManager.instance.PlaySound("Win");
+        
+        yield return new WaitForSeconds(time);
+        
+        ui.ShowWindowsWin((int)Mathf.Floor(clock.StartTime), progressCounter);
+        AudioManager.instance.StopMusic($"Music_{randomMusicIndex}");
     }
 }

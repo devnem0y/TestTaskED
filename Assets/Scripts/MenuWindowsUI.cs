@@ -8,6 +8,7 @@ public class MenuWindowsUI
 {
     public event Action<int> OnStartSession;
     public event Action OnQuit; 
+    public event Action OnOpenURL;
     public event Action OnSettingsSoundClick;
     public event Action OnSettingsMusicClick;
 
@@ -28,6 +29,14 @@ public class MenuWindowsUI
     private List<Sprite> spritesButtonSound;
     [SerializeField]
     private List<Sprite> spritesButtonMusic;
+    
+    [SerializeField]
+    private Text version = null;
+    [SerializeField]
+    private Button btnGoToGooglePlay = null;
+    [SerializeField] 
+    private string urlAppGooglePlay = "";
+    public string UrlAppGooglePlay => urlAppGooglePlay;
 
     public void AddListeners()
     {
@@ -37,12 +46,16 @@ public class MenuWindowsUI
         btn3x3.onClick.AddListener(Session3x3Event);
         btn4x4.onClick.AddListener(Session4x4Event);
         btn5x5.onClick.AddListener(Session5x5Event);
+        btnGoToGooglePlay.onClick.AddListener(GoToGooglePlay);
     }
 
     public void Aplay()
     {
+        version.text = $"v {Application.version}";
+        
         #if PLATFORM_WEBGL
         btnQuit.gameObject.SetActive(false);
+        btnGoToGooglePlay.gameObject.SetActive(Application.version == "1.2");
         #endif
         
         btnSound.gameObject.GetComponent<Image>().sprite = GameData.instance.IsSound ? spritesButtonSound[0] : spritesButtonSound[1];
@@ -52,6 +65,13 @@ public class MenuWindowsUI
     private void QuitEvent()
     {
         OnQuit?.Invoke();
+        
+        // Animation button and other ui
+        AudioManager.instance.PlaySound("ButtonClick");
+    }
+    private void GoToGooglePlay()
+    {
+        OnOpenURL?.Invoke();
         
         // Animation button and other ui
         AudioManager.instance.PlaySound("ButtonClick");
