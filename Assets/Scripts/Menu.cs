@@ -44,7 +44,8 @@ public class Menu : MonoBehaviour
     
     public void OpenURL()
     {
-        Application.OpenURL(ui.UrlAppGooglePlay);
+        System.Diagnostics.Process.Start(ui.UrlAppGooglePlay);
+        //Application.OpenURL(ui.UrlAppGooglePlay);
     }
 
     private void SettingsSound()

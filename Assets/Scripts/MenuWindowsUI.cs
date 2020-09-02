@@ -55,7 +55,7 @@ public class MenuWindowsUI
         
         #if PLATFORM_WEBGL
         btnQuit.gameObject.SetActive(false);
-        btnGoToGooglePlay.gameObject.SetActive(Application.version == "1.2");
+        btnGoToGooglePlay.gameObject.SetActive(Application.version.Contains("f"));
         #endif
         
         btnSound.gameObject.GetComponent<Image>().sprite = GameData.instance.IsSound ? spritesButtonSound[0] : spritesButtonSound[1];

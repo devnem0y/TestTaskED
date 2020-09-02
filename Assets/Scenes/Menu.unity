@@ -1158,7 +1158,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 3122bd085f066bd4e9edf72092623d12, type: 3}
     version: {fileID: 449418624}
     btnGoToGooglePlay: {fileID: 206228334}
-    urlAppGooglePlay: https://play.google.com/store/
+    urlAppGooglePlay: https://play.google.com/store/apps/details?id=com.devnem0y.nadoedashki
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
